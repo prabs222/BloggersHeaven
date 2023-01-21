@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block start %}
+<!-- <h1>My new Blog</h1> -->
+<!-- <h4>Welcome to Bloggers Heaven</h4> -->
+
+<div class="container mt-5">
+    <div class="row">
+        <!-- <div class="col-md-4 "> -->
+            <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Blog Title</th>
+                    <th scope="col">Author</th>
+                    <th scope="col">Created At</th>
+                    <th scope="col">Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for blog in blogs %}
+                  <tr>
+                    <th scope="row">{{forloop.counter}}</th>
+                    <td>{{blog.title}}</td>
+                    <td>{{blog.author}}</td>
+                    <td>{{blog.created_at}}</td>
+
+                    <td>
+                      <a href="{% url 'deleteBlog' blog.id %}" class="btn btn-danger btn-outline-dark">Delete</a>
+                      <a href="{% url 'updateBlog' blog.id %}" class="btn btn-info m-1 btn-outline-dark">Update</a>
+
+                    </td>
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+        <!-- </div> -->
+    </div>
+</div>
+<!-- {{blog.content|safe}} -->
+{% endblock %}
