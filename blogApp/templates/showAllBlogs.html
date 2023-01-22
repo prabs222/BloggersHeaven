@@ -24,7 +24,6 @@
                     <td>{{blog.title}}</td>
                     <td>{{blog.author}}</td>
                     <td>{{blog.created_at}}</td>
-
                     <td>
                       <a href="{% url 'deleteBlog' blog.id %}" class="btn btn-danger btn-outline-dark">Delete</a>
                       <a href="{% url 'updateBlog' blog.id %}" class="btn btn-info m-1 btn-outline-dark">Update</a>

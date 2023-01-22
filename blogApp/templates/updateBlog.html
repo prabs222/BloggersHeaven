@@ -4,29 +4,44 @@
 <!-- <h1>My new Blog</h1> -->
 <!-- <h4>Welcome to Bloggers Heaven</h4> -->
 
-<div class="container mt-5">
+<div class="container mt-2">
     <div class="row">
-        <h2>Update your Blog</h2>
-        <form>
-            <div class="mb-3 mt-3">
+        <h2>Create a new Blog</h2>
+        {% if messages %}
+                  {% for message in messages %}
+                    <div class="alert alert-success">
+                        {{message}}
+                    </div>
+                  {% endfor %}
+              {% endif %}
+
+        <form method="post" enctype="multipart/form-data">
+            <div class="mb-3 mt-1">
                 <label for="category" class="form-label">Select Category<Title></Title></label>
-                <select class="form-control" id="">
-                    <option>Choose</option>
+                <select class="form-control" name="category">
+                    <option value="{{category.id}}">{{category}}</option>
+                    {% for category in categories %}
+                    <option value="{{category.id}}">{{category.category}}</option>
+                    {% endfor %}
                 </select>
             </div>
-  
-            <div class="mb-3 mt-3">
+              
+            <div class="mb-3 mt-2">
               <label for="blogTitle" class="form-label">Blog Title</label>
-              <input type="text" class="form-control" id="BlogTitle" aria-describedby="emailHelp">
+              <input type="text" value={{blog_obj.title}} name="title" class="form-control"  >
             </div>
             <div class="mb-3">
-              <label for="blogContent" class="form-label">Write your blog contents...</label>
-              <input type="text" class="form-control" id="blogContent">
+              {{form.media}}
+
+              {{form.as_p}}
             </div>
-            <div class="mb-3 form-check">
-              <input type="checkbox" class="form-check-input" id="exampleCheck1">
-              <label class="form-check-label" for="exampleCheck1">Check me out</label>
+
+            <div class="mb-3 mt-2">
+              <label for="coverImage" class="form-label">Upload Cover Image</label>
+              <input type="file" name="coverImage" class="form-control" id="coverImage" aria-describedby="emailHelp">
             </div>
+
+
             <button type="submit" class="btn btn-primary">Update Blog</button>
           </form>
 

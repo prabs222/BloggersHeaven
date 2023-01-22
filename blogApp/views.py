@@ -96,8 +96,43 @@ def createBlog(request):
     return render(request, 'createBlog.html', context)
 
 
-def updateBlog(request):
-    return render(request, 'updateBlog.html')
+def updateBlog(request, id):
+    context= {}
+    try:
+        blog_obj = Blog.objects.get(id=id)
+        if request.user != blog_obj.author:
+            return redirect('/')
+        if request.method == 'POST':
+            form = BlogForm(request.POST)
+            title = request.POST.get('title')
+            category = request.POST.get('category')
+            cover_image = request.FILES['coverImage']
+            
+            if form.is_valid():
+                content = form.cleaned_data['content']
+                blog_obj = Blog.objects.get(id=id)
+                blog_obj.title = title
+                blog_obj.category = Categories.objects.get(id = category)
+                blog_obj.cover_image = cover_image
+                blog_obj.content = content
+                # blog_obj(title=title, content=content, author = request.user , category = , cover_image = cover_image)   
+                blog_obj.save() 
+                messages.success(request, 'Your blog has been updated.')
+
+                return redirect('/createBlog/')
+    
+
+        
+        
+        initial_dict = {'content': blog_obj.content}
+        form = BlogForm(initial=initial_dict)
+        context = {'title': blog_obj.title, 'blog_obj':blog_obj,'category': blog_obj.category , 'categories': Categories.objects.all(),'form': form}
+        
+
+    
+    except Exception as e:
+        print(e)
+    return render(request, 'updateBlog.html', context)
 
 def deleteBlog(request,id):
     return redirect('showAllBlogs.html')
