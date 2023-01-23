@@ -6,7 +6,8 @@
 
 <div class="container mt-2">
     <div class="row">
-        <h2>Create a new Blog</h2>
+      <div><center><h2 >Update your blog</h2></center></div>  
+      
         {% if messages %}
                   {% for message in messages %}
                     <div class="alert alert-success">
@@ -28,20 +29,20 @@
               
             <div class="mb-3 mt-2">
               <label for="blogTitle" class="form-label">Blog Title</label>
-              <input type="text" value={{blog_obj.title}} name="title" class="form-control"  >
+              <input type="text" value="{{blog_obj.title}}" name="title" class="form-control"  >
             </div>
             <div class="mb-3">
               {{form.media}}
 
               {{form.as_p}}
             </div>
+            <label for="coverImage" class="form-label">Current Cover Image :</label>
 
+            <img src="/media/{{blog_obj.cover_image}}" class="" width="400" height="250" alt="...">
             <div class="mb-3 mt-2">
-              <label for="coverImage" class="form-label">Upload Cover Image</label>
-              <input type="file" name="coverImage" class="form-control" id="coverImage" aria-describedby="emailHelp">
+              <label for="coverImage" class="form-label">Update Cover Image</label>
+              <input type="file" name="coverImage" class="form-control" id="coverImage" value="/media/{{blog_obj.cover_image}}" aria-describedby="emailHelp">
             </div>
-
-
             <button type="submit" class="btn btn-primary">Update Blog</button>
           </form>
 

@@ -2,9 +2,10 @@ from django.shortcuts import render,redirect
 from .models import *
 from django.contrib import messages
 from .form import *
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login,authenticate,logout
 # Create your views here.
-def get_blog(request,id):
+def getBlog(request,id):
     context = {}
     try:
         blog_obj = Blog.objects.get(id=id)
@@ -16,8 +17,8 @@ def get_blog(request,id):
     return render(request,'blog.html',context)
 
 def home(request):
-    
-    return render(request,'home.html')
+    context = {'blogs': Blog.objects.all()}
+    return render(request,'home.html',context)
 
 def mylogin(request):
     if request.method == 'POST':
@@ -42,9 +43,7 @@ def myLogout(request):
     logout(request)
     print('Logged out successful')
     return redirect('/')
-
-        
-
+    
 def myregister(request):
     if request.method == 'POST':
         username = request.POST.get('username')
@@ -71,11 +70,12 @@ def myregister(request):
         return redirect('/login/')# recorded
     return render(request,'register.html')
 
+@login_required(login_url='/login/')
 def showAllBlogs(request):
     context = {'blogs': Blog.objects.filter(author = request.user)}
     return render(request, 'showAllBlogs.html',context)
 
-
+@login_required(login_url='/login/')
 def createBlog(request):
     context = {'form': BlogForm, 'categories': Categories.objects.all()}
     if request.method == 'POST':
@@ -95,7 +95,7 @@ def createBlog(request):
     
     return render(request, 'createBlog.html', context)
 
-
+@login_required(login_url='/login/')
 def updateBlog(request, id):
     context= {}
     try:
@@ -106,8 +106,11 @@ def updateBlog(request, id):
             form = BlogForm(request.POST)
             title = request.POST.get('title')
             category = request.POST.get('category')
-            cover_image = request.FILES['coverImage']
-            
+            try:
+                cover_image = request.FILES['coverImage']
+            except:
+                cover_image = blog_obj.cover_image
+                                
             if form.is_valid():
                 content = form.cleaned_data['content']
                 blog_obj = Blog.objects.get(id=id)
@@ -119,20 +122,23 @@ def updateBlog(request, id):
                 blog_obj.save() 
                 messages.success(request, 'Your blog has been updated.')
 
-                return redirect('/createBlog/')
-    
-
-        
-        
+                return redirect('/showAllBlogs/')
         initial_dict = {'content': blog_obj.content}
         form = BlogForm(initial=initial_dict)
         context = {'title': blog_obj.title, 'blog_obj':blog_obj,'category': blog_obj.category , 'categories': Categories.objects.all(),'form': form}
-        
-
-    
     except Exception as e:
-        print(e)
+        print(e.error_message)
     return render(request, 'updateBlog.html', context)
 
+@login_required(login_url='/login/')
 def deleteBlog(request,id):
+    try:
+        blog_obj = Blog.objects.get(id=id)
+        blog_obj.delete()
+        messages.success(request, 'Your blog has been deleted.')
+
+        return redirect('/showAllBlogs/')
+        
+    except Exception as e:
+        print(e)
     return redirect('showAllBlogs.html')

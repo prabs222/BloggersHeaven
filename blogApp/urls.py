@@ -4,11 +4,10 @@ from .views import *
 
 urlpatterns = [
     # path('', include('blogApp.urls')),
-    path('get-blog/<id>/', get_blog),
+    path('getBlog/<id>/', getBlog , name="getBlog"),
     path('',home),
     path('login/', mylogin , name="myLogin"),
     path('logout/', myLogout , name="myLogout"),
-    
     path('register/', myregister, name="register"),
     path('showAllBlogs/', showAllBlogs, name="showAllBlogs"),
     path('createBlog/', createBlog, name="createBlog"),
