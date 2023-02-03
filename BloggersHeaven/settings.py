@@ -103,7 +103,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',  
         'NAME': 'BloggersHeaven',  
         'USER': 'root',  
-        'PASSWORD': 'Prabhakar@123#',  
+        'PASSWORD': config('db_pass'),  
         'HOST': '127.0.0.1',  
         'PORT': '3306',  
         'OPTIONS': {    
@@ -140,3 +140,8 @@ STATIC_ROOT = os.path.join(BASE_DIR, "static")
 MEDIA_ROOT = os.path.join(BASE_DIR , 'media')
 MEDIA_URL = '/media/'   
 
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_USE_TLS = True
+EMAIL_PORT = 587
+EMAIL_HOST_USER = config('USER_ID1')
+EMAIL_HOST_PASSWORD = config('PASSWORD1')

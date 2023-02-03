@@ -2,6 +2,7 @@ from django.shortcuts import render,redirect
 from .models import *
 from django.contrib import messages
 from .form import *
+from .all_mails import *
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login,authenticate,logout
 # Create your views here.
@@ -66,6 +67,7 @@ def myregister(request):
         user_obj = User(username = username, email = email)
         user_obj.set_password(password)
         user_obj.save()
+        registration_mail(email)
         messages.success(request, 'Your account has been created.')
         return redirect('/login/')# recorded
     return render(request,'register.html')
