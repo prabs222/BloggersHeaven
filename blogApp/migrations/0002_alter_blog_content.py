@@ -5,15 +5,14 @@ import froala_editor.fields
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('blogApp', '0001_initial'),
+        ("blogApp", "0001_initial"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='blog',
-            name='content',
+            model_name="blog",
+            name="content",
             field=froala_editor.fields.FroalaField(),
         ),
     ]

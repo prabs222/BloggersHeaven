@@ -1,18 +1,16 @@
 from django.contrib import admin
-from django.urls import path,include
+from django.urls import path, include
 from .views import *
 
 urlpatterns = [
     # path('', include('blogApp.urls')),
-    path('getBlog/<id>/', getBlog , name="getBlog"),
-    path('',home),
-    path('login/', mylogin , name="myLogin"),
-    path('logout/', myLogout , name="myLogout"),
-    path('register/', myregister, name="register"),
-    path('showAllBlogs/', showAllBlogs, name="showAllBlogs"),
-    path('createBlog/', createBlog, name="createBlog"),
-    path('updateBlog/<id>/', updateBlog, name="updateBlog"),
-    path('deleteBlog/<id>/', deleteBlog, name="deleteBlog"),
-    
-    
+    path("getBlog/<id>/", getBlog, name="getBlog"),
+    path("", home),
+    path("login/", mylogin, name="myLogin"),
+    path("logout/", myLogout, name="myLogout"),
+    path("register/", myregister, name="register"),
+    path("showAllBlogs/", showAllBlogs, name="showAllBlogs"),
+    path("createBlog/", createBlog, name="createBlog"),
+    path("updateBlog/<id>/", updateBlog, name="updateBlog"),
+    path("deleteBlog/<id>/", deleteBlog, name="deleteBlog"),
 ]

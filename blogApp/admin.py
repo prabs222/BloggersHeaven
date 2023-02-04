@@ -5,4 +5,3 @@ from .models import *
 
 admin.site.register(Categories)
 admin.site.register(Blog)
-
