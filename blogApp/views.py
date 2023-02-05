@@ -13,13 +13,9 @@ def getBlog(request, id):
     try:
         blog_obj = Blog.objects.get(id=id)
         context["blog"] = blog_obj
-
     except Exception as e:
         print(e)
-
     return render(request, "blog.html", context)
-
-
 def home(request):
     context = {"blogs": Blog.objects.all()}
     return render(request, "home.html", context)
@@ -34,7 +30,6 @@ def mylogin(request):
         if not user_obj.exists():
             messages.warning(request, "Username does not exist.")  # recorded
             return redirect("/login/")
-
         user_obj = authenticate(username=username, password=password)
         if not user_obj:
             messages.warning(request, "Invalid credentials.")  # recorded
@@ -71,7 +66,6 @@ def myregister(request):
                 request, "Password and confirm password do not match."
             )  # recorded
             return redirect("/register/")
-
         user_obj = User(username=username, email=email)
         user_obj.set_password(password)
         user_obj.save()
@@ -95,10 +89,8 @@ def createBlog(request):
         title = request.POST.get("title")
         category = request.POST.get("category")
         cover_image = request.FILES["coverImage"]
-
         if form.is_valid():
             content = form.cleaned_data["content"]
-
             Blog.objects.create(
                 title=title,
                 content=content,
@@ -153,8 +145,6 @@ def updateBlog(request, id):
     except Exception as e:
         print(e.error_message)
     return render(request, "updateBlog.html", context)
-
-
 @login_required(login_url="/login/")
 def deleteBlog(request, id):
     try:
