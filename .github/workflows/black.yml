@@ -6,13 +6,20 @@ jobs:
   lint:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      
-      - name: Install Python dependencies
-        run: pip install black
-        
-      - uses: psf/black@stable
+      - uses: actions/checkout@v3
+      - name: Set up latest Python
+        uses: actions/setup-python@v4
         with:
-          options: "--check --verbose"
-          version: "~= 22.0"
-          auto-fix: true
+          python-version: "*"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -e '.[d]'
+          python -m pip install tox
+      - name: Run pre-commit hooks
+        uses: pre-commit/action@v3.0.0
+
+      - name: Format ourselves
+        run: |
+          tox -e run_self
