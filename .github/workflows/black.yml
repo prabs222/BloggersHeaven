@@ -1,22 +1,31 @@
 name: Lint
 
 on: [push, pull_request]
+permissions:
+  contents: write
 
 jobs:
   format:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@master
+        with:
+          persist-credentials: false # otherwise, the token used is the GITHUB_TOKEN, instead of your personal token
+          fetch-depth: 0
+        
       - name: Format code with black
         run: |
           pip install black
           black .
       - uses: psf/black@stable
-      - name: Commit changes
-        uses: EndBug/add-and-commit@v4
+      
+      - name: Commit files
+        run: |
+          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git commit -a -m "Add changes"
+      - name: Push changes
+        uses: ad-m/github-push-action@master
         with:
-          author_name: ${{ github.actor }}
-          author_email: ${{ github.actor }}@users.noreply.github.com
-          message: "Format code with black"
-          add: "."
+          github_token: ${{ secrets.GITHUB_TOKEN }}
           branch: ${{ github.ref }}

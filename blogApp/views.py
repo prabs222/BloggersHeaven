@@ -16,6 +16,8 @@ def getBlog(request, id):
     except Exception as e:
         print(e)
     return render(request, "blog.html", context)
+
+
 def home(request):
     context = {"blogs": Blog.objects.all()}
     return render(request, "home.html", context)
@@ -145,6 +147,8 @@ def updateBlog(request, id):
     except Exception as e:
         print(e.error_message)
     return render(request, "updateBlog.html", context)
+
+
 @login_required(login_url="/login/")
 def deleteBlog(request, id):
     try:
