@@ -6,10 +6,6 @@ urlpatterns = [
     # path('', include('blogApp.urls')),
     path("getBlog/<id>/", getBlog, name="getBlog"),
     path("", home),
-    
-    
-    
-    
     path("login/", mylogin, name="myLogin"),
     path("logout/", myLogout, name="myLogout"),
     path("register/", myregister, name="register"),
