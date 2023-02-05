@@ -15,3 +15,4 @@ jobs:
         with:
           options: "--check --verbose"
           version: "~= 22.0"
+          auto-fix: true
