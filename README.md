@@ -100,9 +100,9 @@ Superuser created successfully
 
 - Users can write personalised blogs through Froala Editor
 
-## Contributing
 
-Contributions are always welcome!
+
+
 
 ## Support++
 
