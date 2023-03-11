@@ -92,7 +92,7 @@ Superuser created successfully
 
 ## Tech Stack
 
-**Client:** HTML , CSS , Javascript
+**Client:** HTML , CSS , Javascript , Froala Editor
 
 **Server:** Django , Python
 
